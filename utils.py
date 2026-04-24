@@ -93,6 +93,9 @@ def build_survey_summary_table(filtered_df: pd.DataFrame):
     normal_cols = [c for c in cols if c not in dk_cols and c != "Total"]
     final_df = final_df[normal_cols + dk_cols + ["Total"]]
     
+    # 👉 FIX: Convert to object type so we can store formatted strings without TypeErrors
+    final_df = final_df.astype(object)
+    
     final_df.loc["Count"] = pd.to_numeric(final_df.loc["Count"], errors="coerce").fillna(0).round(0).apply(lambda x: f"{int(x):,}")
     final_df.loc["Weighted %"] = pd.to_numeric(final_df.loc["Weighted %"], errors="coerce").fillna(0).round(1).apply(
         lambda x: f"{int(x)}%" if float(x) == 100 else f"{float(x):.1f}%"
