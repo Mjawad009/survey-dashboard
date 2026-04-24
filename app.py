@@ -220,4 +220,4 @@ if pivot_pct is not None:
     total_row.index = ["Total"]
     final_table = pd.concat([total_row, pivot_pct])
     def color_sc(val): return f"background-color: rgb({int(240 - (val * 1.5))}, {int(240 - (val * 1.5))}, 255); color: black" if not pd.isna(val) else ""
-    st.dataframe(final_table.style.format("{:.1f}%").applymap(color_sc).apply(lambda r: ["background-color: #f8f8ff; font-weight: bold"] * len(r) if r.name == "Total" else [""] * len(r), axis=1), use_container_width=True)
+    st.dataframe(final_table.style.format("{:.1f}%").map(color_sc).apply(lambda r: ["background-color: #f8f8ff; font-weight: bold"] * len(r) if r.name == "Total" else [""] * len(r), axis=1), use_container_width=True)
